@@ -1,9 +1,9 @@
 package org.xutils.http.loader;
 
+import java.io.InputStream;
+
 import org.xutils.cache.DiskCacheEntity;
 import org.xutils.http.request.UriRequest;
-
-import java.io.InputStream;
 
 /**
  * 建议配合 {@link org.xutils.common.Callback.PrepareCallback} 使用,
@@ -23,6 +23,11 @@ import java.io.InputStream;
     public InputStream load(final UriRequest request) throws Throwable {
         request.sendRequest();
         return request.getInputStream();
+    }
+
+    @Override
+    public InputStream load(InputStream inputstream, int statusCode) throws Throwable {
+        return inputstream;
     }
 
     @Override

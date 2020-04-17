@@ -1,5 +1,17 @@
 package org.xutils.http.loader;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.Date;
+
 import android.text.TextUtils;
 
 import org.xutils.cache.DiskCacheEntity;
@@ -13,18 +25,6 @@ import org.xutils.ex.FileLockedException;
 import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.http.request.UriRequest;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Author: wyouflf
@@ -66,7 +66,8 @@ public class FileLoader extends Loader<File> {
         }
     }
 
-    protected File load(final InputStream in) throws Throwable {
+    @Override
+    public File load(final InputStream in, int statusCode) throws Throwable {
         File targetFile = null;
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
@@ -239,7 +240,7 @@ public class FileLoader extends Loader<File> {
                     LogUtil.e(ex.getMessage(), ex);
                 }
             }
-            result = this.load(request.getInputStream());
+            result = this.load(request.getInputStream(),200);
         } catch (HttpException httpException) {
             if (httpException.getCode() == 416) {
                 if (diskCacheFile != null) {

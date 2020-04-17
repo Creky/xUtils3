@@ -1,5 +1,7 @@
 package org.xutils.http.loader;
 
+import java.io.InputStream;
+
 import android.text.TextUtils;
 
 import org.json.JSONArray;
@@ -36,6 +38,12 @@ import org.xutils.http.request.UriRequest;
     public JSONArray load(final UriRequest request) throws Throwable {
         request.sendRequest();
         resultStr = IOUtil.readStr(request.getInputStream(), charset);
+        return new JSONArray(resultStr);
+    }
+
+    @Override
+    public JSONArray load(InputStream inputstream, int statusCode) throws Throwable {
+        resultStr = IOUtil.readStr(inputstream, charset);
         return new JSONArray(resultStr);
     }
 

@@ -1,5 +1,7 @@
 package org.xutils.http.loader;
 
+import java.io.InputStream;
+
 import org.xutils.cache.DiskCacheEntity;
 import org.xutils.http.request.UriRequest;
 
@@ -17,6 +19,11 @@ import org.xutils.http.request.UriRequest;
     public Integer load(UriRequest request) throws Throwable {
         request.sendRequest();
         return request.getResponseCode();
+    }
+
+    @Override
+    public Integer load(InputStream inputstream, int statusCode) throws Throwable {
+        return statusCode;
     }
 
     @Override

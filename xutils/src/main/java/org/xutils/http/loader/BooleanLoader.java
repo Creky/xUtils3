@@ -1,5 +1,7 @@
 package org.xutils.http.loader;
 
+import java.io.InputStream;
+
 import org.xutils.cache.DiskCacheEntity;
 import org.xutils.http.request.UriRequest;
 
@@ -18,6 +20,11 @@ import org.xutils.http.request.UriRequest;
     public Boolean load(final UriRequest request) throws Throwable {
         request.sendRequest();
         return request.getResponseCode() < 300;
+    }
+
+    @Override
+    public Boolean load(InputStream inputstream, int statusCode) throws Throwable {
+        return statusCode < 300;
     }
 
     @Override

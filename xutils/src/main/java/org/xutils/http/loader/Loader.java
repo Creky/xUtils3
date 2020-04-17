@@ -1,6 +1,9 @@
 package org.xutils.http.loader;
 
 
+import java.io.InputStream;
+import java.util.Date;
+
 import android.text.TextUtils;
 
 import org.xutils.cache.DiskCacheEntity;
@@ -8,8 +11,6 @@ import org.xutils.cache.LruDiskCache;
 import org.xutils.http.ProgressHandler;
 import org.xutils.http.RequestParams;
 import org.xutils.http.request.UriRequest;
-
-import java.util.Date;
 
 /**
  * Author: wyouflf
@@ -37,6 +38,8 @@ public abstract class Loader<T> {
     public abstract Loader<T> newInstance();
 
     public abstract T load(final UriRequest request) throws Throwable;
+
+    public abstract T load(final InputStream inputstream, int statusCode) throws Throwable;
 
     public abstract T loadFromCache(final DiskCacheEntity cacheEntity) throws Throwable;
 

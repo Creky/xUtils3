@@ -1,5 +1,7 @@
 package org.xutils.http.loader;
 
+import java.io.InputStream;
+
 import org.xutils.cache.DiskCacheEntity;
 import org.xutils.common.util.IOUtil;
 import org.xutils.http.request.UriRequest;
@@ -21,6 +23,12 @@ import org.xutils.http.request.UriRequest;
     public byte[] load(final UriRequest request) throws Throwable {
         request.sendRequest();
         resultData = IOUtil.readBytes(request.getInputStream());
+        return resultData;
+    }
+
+    @Override
+    public byte[] load(InputStream inputstream, int statusCode) throws Throwable {
+        resultData = IOUtil.readBytes(inputstream);
         return resultData;
     }
 

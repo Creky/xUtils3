@@ -1,16 +1,17 @@
 package org.xutils.http.loader;
 
+import java.io.InputStream;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.List;
+
 import org.xutils.cache.DiskCacheEntity;
 import org.xutils.common.util.ParameterizedTypeUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.http.annotation.HttpResponse;
 import org.xutils.http.app.ResponseParser;
 import org.xutils.http.request.UriRequest;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.List;
 
 /**
  * Created by lei.jiao on 2014/6/27.
@@ -88,6 +89,12 @@ import java.util.List;
     public Object load(final UriRequest request) throws Throwable {
         request.setResponseParser(parser);
         Object innerLoaderResult = innerLoader.load(request);
+        return parser.parse(objectType, objectClass, innerLoaderResult);
+    }
+
+    @Override
+    public Object load(InputStream inputstream, int statusCode) throws Throwable {
+        Object innerLoaderResult = innerLoader.load(inputstream, statusCode);
         return parser.parse(objectType, objectClass, innerLoaderResult);
     }
 
